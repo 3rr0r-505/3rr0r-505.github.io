@@ -29,7 +29,7 @@
   body {
     background: var(--bg); color: var(--text);
     font-family: var(--body); font-size: 17px; line-height: 1.65;
-    overflow-x: hidden; cursor: none;
+    overflow-x: hidden; cursor: auto;
   }
 
   /* Cursor */
@@ -44,6 +44,13 @@
     position: fixed; top: 0; left: 0; z-index: 9999;
     width: 4px; height: 4px; border-radius: 50%;
     background: var(--accent); pointer-events: none; transform: translate(-50%,-50%);
+  }
+  @media(hover: hover) {
+    body { cursor: none; }
+    #cursor, #cursor-dot { display: block; }
+  }
+  @media(hover: none) {
+    #cursor, #cursor-dot { display: none; }
   }
 
   /* Scanline */
