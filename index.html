@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>5pyd3r // Red Team Portfolio</title>
 <link rel="icon" href="favicon/favicon.ico" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"/>
+
+<!-- 🦋 stylesheet -->
 <style>
   :root {
     --bg:      #030a0f;
@@ -478,6 +481,7 @@
     footer{padding:20px;flex-direction:column;text-align:center}
   }
 </style>
+
 </head>
 <body>
 
@@ -872,6 +876,7 @@
   <div class="footer-copy">// raw html · no frameworks · all signal, no noise · 2026</div>
 </footer>
 
+<!-- 🪲 JavaScript -->
 <script>
 // Cursor
 const cursor = document.getElementById('cursor');
@@ -906,7 +911,7 @@ function animateCounter(el) {
     const p = Math.min((now - start) / 1600, 1);
     const e = 1 - Math.pow(1-p, 3);
     const v = Math.floor(e * target);
-    el.textContent = suffix === 'cgpa' ? (v/100).toFixed(2) : v + (p>=1 && target>5 ? '+' : '');
+    el.textContent = suffix === 'cgpa' ? (v/100).toFixed(2) : v + (p>=1 && (target===3 || target>5) ? '+' : '');
     if(p < 1) requestAnimationFrame(run);
   };
   requestAnimationFrame(run);
