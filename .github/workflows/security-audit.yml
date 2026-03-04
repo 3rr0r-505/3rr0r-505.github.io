@@ -208,6 +208,8 @@ jobs:
             --exclude "127.0.0.1"
             --exclude "linkedin.com"
             --exclude "tryhackme.com"
+            --exclude "fonts.googleapis.com"
+            --exclude "fonts.gstatic.com"
             --format markdown
             ./blog/blog.html
             ./blog/post.html
