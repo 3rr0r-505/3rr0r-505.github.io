@@ -50,6 +50,9 @@ jobs:
             echo "TruffleHog detected potential secrets. Review Actions log for details." >> secret-report.md
           fi
 
+      - name: Post summary
+        if: always()
+        run: cat secret-report.md >> $GITHUB_STEP_SUMMARY
       - name: Upload secret scan report
         if: always()
         uses: actions/upload-artifact@v4
@@ -151,6 +154,9 @@ jobs:
           print("Report generated.")
           EOF
 
+      - name: Post summary
+        if: always()
+        run: cat semgrep-report.md >> $GITHUB_STEP_SUMMARY
       - name: Upload semgrep report
         if: always()
         uses: actions/upload-artifact@v4
@@ -356,6 +362,9 @@ jobs:
           EOF
         continue-on-error: true
 
+      - name: Post summary
+        if: always()
+        run: cat integrity-report.md >> $GITHUB_STEP_SUMMARY
       - name: Upload integrity report
         if: always()
         uses: actions/upload-artifact@v4
