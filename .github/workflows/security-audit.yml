@@ -200,17 +200,20 @@ jobs:
           args: |
             --verbose
             --no-progress
-            --accept 200,201,202,203,204,206,301,302,307,308
+            --accept 200,201,202,203,204,206,301,302,307,308,429
+            --timeout 20
             --exclude "^mailto:"
             --exclude "^javascript:"
             --exclude "localhost"
             --exclude "127.0.0.1"
+            --exclude "linkedin.com"
+            --exclude "tryhackme.com"
             --format markdown
             --output lychee-report.md
             ./blog/blog.html
             ./blog/post.html
             ./index.html
-          fail: false
+          fail: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -232,7 +235,7 @@ jobs:
           retention-days: 30
 
       - name: Open issue on broken links
-        if: steps.lychee.outputs.exit_code != '0'
+        if: steps.lychee.outcome == 'failure'
         uses: actions/github-script@v7
         with:
           script: |
