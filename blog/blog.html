@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>5pyd3r // Blog</title>
+    <link rel="icon" href="../assets/favicon/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* ── Blog-specific styles ── */
+
+        #blog-hero {
+            min-height: 38vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 48px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hex-bg {
+            position: absolute; inset: 0; z-index: 0; opacity: .06;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 0l28 17v33zm0 34L0 84V51l28-17 28 17v33z' fill='none' stroke='%2300ffe7' stroke-width='.5'/%3E%3C/svg%3E");
+            background-size: 56px 100px;
+            animation: hexDrift 30s linear infinite;
+        }
+        @keyframes hexDrift { to { background-position: 56px 100px; } }
+
+        .blog-hero-content {
+            position: relative; z-index: 1;
+        }
+
+        .blog-eyebrow {
+            font-family: var(--mono);
+            font-size: .72rem;
+            color: var(--accent2);
+            letter-spacing: 4px;
+            margin-bottom: 14px;
+            opacity: 0;
+            animation: fadeUp .6s .2s forwards;
+        }
+
+        .blog-title {
+            font-family: var(--head);
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 4px;
+            line-height: 1;
+            opacity: 0;
+            animation: fadeUp .6s .4s forwards;
+        }
+
+        .blog-title .accent-c { color: var(--accent); text-shadow: var(--glow); }
+        .blog-title .accent-r { color: var(--accent2); text-shadow: var(--glow2); }
+
+        .blog-subtitle {
+            font-family: var(--mono);
+            font-size: .9rem;
+            color: var(--muted);
+            margin-top: 16px;
+            opacity: 0;
+            animation: fadeUp .6s .6s forwards;
+        }
+
+        .blog-subtitle .blink {
+            display: inline-block; width: 10px; height: 1.1em;
+            background: var(--accent); vertical-align: middle; margin-left: 4px;
+            animation: blink .85s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .blog-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 36px;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp .6s .8s forwards;
+        }
+
+        .blog-stat-num {
+            font-family: var(--head);
+            font-size: 1.5rem;
+            color: var(--accent);
+            text-shadow: var(--glow);
+            font-weight: 900;
+        }
+
+        .blog-stat-label {
+            font-family: var(--mono);
+            font-size: .6rem;
+            color: var(--muted);
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+
+        /* ── Filter bar ── */
+        #posts-section {
+            padding: 60px 48px 100px;
+            background: var(--bg2);
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-family: var(--mono);
+            font-size: .68rem;
+            color: var(--muted);
+            letter-spacing: 2px;
+            margin-right: 4px;
+        }
+
+        .filter-btn {
+            font-family: var(--mono);
+            font-size: .7rem;
+            letter-spacing: 2px;
+            padding: 7px 16px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            background: transparent;
+            cursor: none;
+            transition: all .2s;
+            clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(0,255,231,.05);
+        }
+
+        .filter-btn.active { box-shadow: var(--glow); }
+
+        /* ── Search box ── */
+        .search-wrap {
+            margin-left: auto;
+            position: relative;
+        }
+
+        .search-input {
+            font-family: var(--mono);
+            font-size: .75rem;
+            color: var(--text);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 8px 16px 8px 36px;
+            outline: none;
+            width: 220px;
+            transition: border-color .2s, box-shadow .2s;
+            clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+            cursor: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: var(--glow);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: .8rem;
+            pointer-events: none;
+        }
+
+        /* ── Posts grid ── */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+        }
+
+        /* ── Post card ── */
+        .post-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
+            transition: border-color .3s, transform .3s, box-shadow .3s;
+            text-decoration: none;
+            display: block;
+            cursor: none;
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        .post-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity .5s ease, transform .5s ease, border-color .3s, box-shadow .3s;
+        }
+
+        .post-card::after {
+            content: '';
+            position: absolute; top: 0; right: 0;
+            width: 0; height: 0;
+            border-style: solid;
+            border-width: 0 18px 18px 0;
+            border-color: transparent var(--border) transparent transparent;
+            transition: border-color .3s;
+        }
+
+        .post-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: var(--glow);
+        }
+
+        .post-card:hover::after {
+            border-color: transparent var(--accent) transparent transparent;
+        }
+
+        /* Platform badge */
+        .post-platform {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: .62rem;
+            letter-spacing: 2px;
+            padding: 3px 10px;
+            border: 1px solid;
+            margin-bottom: 14px;
+        }
+
+        .post-platform.THM  { color: #00d26a; border-color: rgba(0,210,106,.4); }
+        .post-platform.HTB  { color: var(--accent); border-color: rgba(0,255,231,.4); }
+        .post-platform.CTF  { color: var(--accent3); border-color: rgba(240,192,64,.4); }
+        .post-platform.OTHER { color: var(--muted); border-color: var(--border); }
+
+        .post-date {
+            font-family: var(--mono);
+            font-size: .65rem;
+            color: var(--muted);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .post-title {
+            font-family: var(--head);
+            font-size: 1.05rem;
+            color: #fff;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .post-desc {
+            font-family: var(--body);
+            font-size: .93rem;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-clamp: 3; 
+        }
+
+        .post-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+
+        .post-read {
+            font-family: var(--mono);
+            font-size: .7rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+        }
+
+        .post-card:hover .post-read {
+            text-shadow: var(--glow);
+        }
+
+        /* Difficulty dot */
+        .post-diff {
+            font-family: var(--mono);
+            font-size: .65rem;
+            letter-spacing: 1px;
+        }
+        .post-diff.Easy   { color: #00d26a; }
+        .post-diff.Medium { color: var(--accent3); }
+        .post-diff.Hard   { color: var(--accent2); }
+        .post-diff.Insane { color: #ff00ff; }
+
+        /* ── Empty / no results ── */
+        .no-posts {
+            font-family: var(--mono);
+            font-size: .85rem;
+            color: var(--muted);
+            text-align: center;
+            padding: 80px 0;
+            grid-column: 1 / -1;
+        }
+
+        .no-posts span { color: var(--accent2); }
+
+        /* ── Scanline + grain inherited from body pseudos in style.css ── */
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @media(max-width: 768px) {
+            #blog-hero    { padding: 100px 20px 50px; }
+            #posts-section { padding: 40px 20px 80px; }
+            .posts-grid   { grid-template-columns: 1fr; }
+            .search-wrap  { margin-left: 0; width: 100%; }
+            .search-input { width: 100%; }
+            .filter-bar   { gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
+    <div id="scrollbar-track"><div id="scrollbar-thumb"></div></div>
+
+    <!-- NAV -->
+    <nav>
+        <a href="../index.html" style="text-decoration:none">
+            <div class="nav-logo">5<span>p</span>yd3r</div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="../index.html#about">about</a></li>
+            <li><a href="../index.html#skills">skills</a></li>
+            <li><a href="../index.html#projects">projects</a></li>
+            <li><a href="../index.html#ctf">ctf</a></li>
+            <li><a href="../index.html#experience">experience</a></li>
+            <li><a href="../index.html#certifications">certs</a></li>
+            <li><a href="../index.html#publications">papers</a></li>
+            <li><a href="../index.html#contact">contact</a></li>
+            <li><a href="blog.html" style="color:var(--accent)">blog</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section id="blog-hero">
+        <div class="hex-bg"></div>
+        <div class="blog-hero-content">
+            <div class="blog-eyebrow">// WRITEUPS &nbsp;·&nbsp; CTF &nbsp;·&nbsp; RESEARCH</div>
+            <div class="blog-title">
+                <span class="accent-c">_</span>W<span class="accent-r">R</span>ITEUPS
+            </div>
+            <div class="blog-subtitle">
+                &gt;&nbsp;documenting the hunt, one flag at a time<span class="blink"></span>
+            </div>
+            <div class="blog-stats">
+                <div>
+                    <div class="blog-stat-num" id="stat-total">0</div>
+                    <div class="blog-stat-label">// TOTAL POSTS</div>
+                </div>
+                <div>
+                    <div class="blog-stat-num" id="stat-thm">0</div>
+                    <div class="blog-stat-label">// TRYHACKME</div>
+                </div>
+                <div>
+                    <div class="blog-stat-num" id="stat-htb">0</div>
+                    <div class="blog-stat-label">// HACKTHEBOX</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POSTS -->
+    <section id="posts-section">
+
+        <!-- Filter + Search bar -->
+        <div class="filter-bar" id="filter-bar">
+            <span class="filter-label">FILTER://</span>
+            <button class="filter-btn active" data-filter="ALL">ALL</button>
+            <button class="filter-btn" data-filter="THM">THM</button>
+            <button class="filter-btn" data-filter="HTB">HTB</button>
+            <button class="filter-btn" data-filter="CTF">CTF</button>
+            <button class="filter-btn" data-filter="OTHER">OTHER</button>
+            <div class="search-wrap">
+                <span class="search-icon">⌕</span>
+                <input class="search-input" type="text" id="search-input" placeholder="search writeups..."/>
+            </div>
+        </div>
+
+        <!-- Posts grid — populated by JS -->
+        <div class="posts-grid" id="posts-grid">
+            <div class="no-posts">
+                <span>[</span> loading posts... <span>]</span>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-name">5pyd3r</div>
+        <div class="footer-copy">// writeups · ctf · research · 2026</div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+    // ── Load posts.json and render ──
+    let allPosts = [];
+    let activeFilter = 'ALL';
+
+    async function loadPosts() {
+        try {
+            const res = await fetch('posts.json');
+            allPosts = await res.json();
+            // Sort by date descending
+            allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            updateStats();
+            renderPosts(allPosts);
+        } catch(e) {
+            document.getElementById('posts-grid').innerHTML =
+                `<div class="no-posts"><span>[</span> no posts found. run gen.py to generate posts.json <span>]</span></div>`;
+        }
+    }
+
+    function updateStats() {
+        animCount(document.getElementById('stat-total'), allPosts.length);
+        animCount(document.getElementById('stat-thm'),   allPosts.filter(p => p.platform === 'THM').length);
+        animCount(document.getElementById('stat-htb'),   allPosts.filter(p => p.platform === 'HTB').length);
+    }
+
+    function animCount(el, target) {
+        if (!el || target === 0) { if(el) el.textContent = '0'; return; }
+        const start = performance.now();
+        const run = now => {
+            const p = Math.min((now - start) / 800, 1);
+            const e = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.floor(e * target);
+            if (p < 1) requestAnimationFrame(run);
+            else el.textContent = target;
+        };
+        requestAnimationFrame(run);
+    }
+
+    function renderPosts(posts) {
+        const grid = document.getElementById('posts-grid');
+
+        if (posts.length === 0) {
+            grid.innerHTML = `<div class="no-posts"><span>[</span> no results found <span>]</span></div>`;
+            return;
+        }
+
+        grid.innerHTML = posts.map((p, i) => {
+            const diffClass = p.difficulty || 'Easy';
+            const platform  = p.platform  || 'OTHER';
+            const date      = new Date(p.date).toLocaleDateString('en-GB', {
+                day:'2-digit', month:'short', year:'numeric'
+            }).toUpperCase();
+
+            return `
+            <a class="post-card" href="post.html?p=${encodeURIComponent(p.path)}"
+               style="transition-delay:${i * 0.07}s">
+                <div class="post-platform ${platform}">${platform}</div>
+                <div class="post-date">${date}</div>
+                <div class="post-title">${p.title}</div>
+                <div class="post-desc">${p.description || ''}</div>
+                <div class="post-footer">
+                    <span class="post-read">READ_MORE ↗</span>
+                    ${p.difficulty ? `<span class="post-diff ${diffClass}">● ${diffClass.toUpperCase()}</span>` : ''}
+                </div>
+            </a>`;
+        }).join('');
+
+        // Stagger reveal
+        requestAnimationFrame(() => {
+            grid.querySelectorAll('.post-card').forEach((card, i) => {
+                setTimeout(() => card.classList.add('visible'), i * 70);
+            });
+            if (typeof updateScrollbar === 'function') updateScrollbar();
+        });
+
+        // Re-attach cursor expand to new cards
+        grid.querySelectorAll('.post-card').forEach(el => {
+            el.addEventListener('mouseenter', () => document.getElementById('cursor')?.classList.add('big'));
+            el.addEventListener('mouseleave', () => document.getElementById('cursor')?.classList.remove('big'));
+        });
+    }
+
+    // ── Filter ──
+    document.getElementById('filter-bar').addEventListener('click', e => {
+        const btn = e.target.closest('.filter-btn');
+        if (!btn) return;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        applyFilters();
+    });
+
+    // ── Search ──
+    document.getElementById('search-input').addEventListener('input', applyFilters);
+
+    function applyFilters() {
+        const q = document.getElementById('search-input').value.toLowerCase().trim();
+        let filtered = allPosts;
+        if (activeFilter !== 'ALL') filtered = filtered.filter(p => p.platform === activeFilter);
+        if (q) filtered = filtered.filter(p =>
+            p.title.toLowerCase().includes(q) ||
+            (p.description || '').toLowerCase().includes(q)
+        );
+        renderPosts(filtered);
+    }
+
+    loadPosts();
+    </script>
+</body>
+</html>

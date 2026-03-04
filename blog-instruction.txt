@@ -1,0 +1,140 @@
+═══════════════════════════════════════════════════════
+  5pyd3r // BLOG — POST FRONTMATTER GUIDE
+═══════════════════════════════════════════════════════
+
+Every .md writeup MUST start with a frontmatter block.
+Frontmatter is the section between the two --- lines
+at the very top of the file. blog-manager.py reads this to build
+the post listing. Without it, the post gets skipped.
+
+
+── TEMPLATE ────────────────────────────────────────────
+
+---
+title: "YOUR TITLE HERE"
+date: YYYY-MM-DD
+platform: THM
+difficulty: Easy
+description: "One or two sentence summary shown on the blog card."
+---
+
+Your writeup content starts here...
+
+
+── FIELDS ──────────────────────────────────────────────
+
+title       REQUIRED
+            The post title shown on the card and post page.
+            Wrap in quotes if it contains special characters.
+            Example:  title: "HTB: MonitorsTwo Writeup"
+
+date        REQUIRED
+            Publication date in YYYY-MM-DD format.
+            Used for sorting posts (newest first).
+            Example:  date: 2026-03-04
+
+platform    OPTIONAL  (default: OTHER)
+            The platform the challenge is from.
+            Controls the badge color on the card.
+            Accepted values:
+              THM    → TryHackMe   (green badge)
+              HTB    → HackTheBox  (cyan badge)
+              CTF    → CTF event   (yellow badge)
+              OTHER  → anything else (grey badge)
+            Example:  platform: HTB
+
+difficulty  OPTIONAL
+            Challenge difficulty level.
+            Controls the colored dot on the card.
+            Accepted values:
+              Easy    → green
+              Medium  → yellow
+              Hard    → red
+              Insane  → purple
+            Example:  difficulty: Medium
+
+description OPTIONAL
+            Short summary shown on the blog listing card.
+            Keep it under 2 sentences for clean card layout.
+            Wrap in quotes.
+            Example:  description: "Linux box involving LFI to RCE and a cronjob privesc."
+
+
+── EXAMPLES ────────────────────────────────────────────
+
+// TryHackMe single .md file:
+
+---
+title: "THM: Pickle Rick"
+date: 2026-01-15
+platform: THM
+difficulty: Easy
+description: "A Rick and Morty themed room requiring web enumeration and command injection to find three ingredients."
+---
+
+
+// HackTheBox folder-based post:
+
+---
+title: "HTB: MonitorsTwo"
+date: 2026-02-20
+platform: HTB
+difficulty: Easy
+description: "Cacti RCE via CVE-2022-46169, Docker escape through SUID bash binary."
+---
+
+
+// CTF event writeup:
+
+---
+title: "PicoCTF 2025: Binary Exploitation"
+date: 2025-03-10
+platform: CTF
+difficulty: Medium
+description: "Buffer overflow challenge with ret2libc technique on a 64-bit binary."
+---
+
+
+── FILE NAMING ──────────────────────────────────────────
+
+Always name your files/folders with the date prefix.
+This keeps _posts/ sorted cleanly in your file explorer.
+
+Single file:    YYYY-MM-DD-short-name.md
+Folder:         YYYY-MM-DD-short-name/
+                    assets/
+                        1.png
+                        2.png
+                    YYYY-MM-DD-short-name.md
+
+The folder name and the .md filename inside MUST match.
+
+
+── IMAGES ───────────────────────────────────────────────
+
+For folder-based posts, put screenshots in assets/
+and reference them in markdown like this:
+
+  ![description](assets/1.png)
+  ![nmap scan](assets/nmap.png)
+
+For single .md file posts, images are not supported
+unless you use an absolute URL (imgur, github raw, etc):
+
+  ![description](https://i.imgur.com/example.png)
+
+
+── WORKFLOW ─────────────────────────────────────────────
+
+1. Write your writeup in _posts/ (file or folder format)
+2. Add frontmatter at the top
+3. Run:  python blog-manager.py
+4. Commit and push:
+       git add .
+       git commit -m "add: htb-monitostwo writeup"
+       git push
+
+To draft without publishing → put it in _posts/_drafts/
+Same format, same frontmatter. Just not picked up by blog-manager.py
+Move to _posts/ when ready to publish, then run blog-manager.py.
+═══════════════════════════════════════════════════════

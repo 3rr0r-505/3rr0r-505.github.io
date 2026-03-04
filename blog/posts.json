@@ -1,0 +1,26 @@
+[
+  {
+    "title": "VMware HGFS Quick Mount / Eject Helper",
+    "date": "2026-02-26",
+    "platform": "OTHER",
+    "difficulty": "",
+    "description": "Clean Bash helpers to easily mount and unmount VMware Host Shared Folders using `vmhgfs-fuse`.",
+    "path": "blog/_posts/2026-02-26-vmware-hgfs-guide.md"
+  },
+  {
+    "title": "OpenVPN Custom Config",
+    "date": "2024-12-14",
+    "platform": "THM",
+    "difficulty": "Easy",
+    "description": "This is a step-by-step instructions to create and manage a custom `systemd` service for automatically starting the TryHackMe VPN using OpenVPN.",
+    "path": "blog/_posts/2024-12-14-OpenVPN.md"
+  },
+  {
+    "title": "THM: RootMe",
+    "date": "2024-12-07",
+    "platform": "THM",
+    "difficulty": "Easy",
+    "description": "Linux privilege escalation challenge involving SUID binaries, sudo misconfigurations, and kernel exploits to gain root access on a compromised system.",
+    "path": "blog/_posts/2026-03-04-RootMe/2026-03-04-RootMe.md"
+  }
+]
