@@ -209,11 +209,11 @@ jobs:
             --exclude "linkedin.com"
             --exclude "tryhackme.com"
             --format markdown
-            --output lychee-report.md
             ./blog/blog.html
             ./blog/post.html
             ./index.html
           fail: true
+          output: lychee-report.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
