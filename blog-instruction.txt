@@ -130,9 +130,9 @@ unless you use an absolute URL (imgur, github raw, etc):
 2. Add frontmatter at the top
 3. Run:  python blog-manager.py
 4. Commit and push:
-       git add .
-       git commit -m "add: htb-monitostwo writeup"
-       git push
+        git add .
+        git commit -m "add: htb-monitostwo writeup"
+        git push
 
 To draft without publishing → put it in _posts/_drafts/
 Same format, same frontmatter. Just not picked up by blog-manager.py
