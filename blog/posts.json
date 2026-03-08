@@ -1,5 +1,13 @@
 [
   {
+    "title": "Ditch VS Code Bloat — Run VSCodium Fully Portable on Windows",
+    "date": "2026-03-28",
+    "platform": "OTHER",
+    "difficulty": "",
+    "description": "Run VSCodium fully portable on Windows — all your extensions, settings, and cache in one folder, C:\\ untouched. Includes a one-command update script.",
+    "path": "blog/_posts/2026-03-08-vscodium-portable-win.md"
+  },
+  {
     "title": "VMware HGFS Quick Mount / Eject Helper",
     "date": "2026-02-26",
     "platform": "OTHER",
