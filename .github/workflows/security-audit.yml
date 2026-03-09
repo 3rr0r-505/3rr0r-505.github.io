@@ -217,8 +217,8 @@ jobs:
             --exclude "fonts.googleapis.com"
             --exclude "fonts.gstatic.com"
             --format markdown
-            ./blog/blog.html
-            ./blog/post.html
+            ./blog/index.html
+            ./blog/posts/index.html
             ./index.html
           fail: true
           output: lychee-report.md
@@ -230,7 +230,7 @@ jobs:
         run: |
           echo "" >> lychee-report.md
           echo "---" >> lychee-report.md
-          echo "**Checked files:** index.html, blog/blog.html, blog/post.html" >> lychee-report.md
+          echo "**Checked files:** index.html, blog/index.html, blog/posts/index.html" >> lychee-report.md
           echo "**Run date:** $(date -u)" >> lychee-report.md
           echo "**Commit:** ${{ github.sha }}" >> lychee-report.md
 
