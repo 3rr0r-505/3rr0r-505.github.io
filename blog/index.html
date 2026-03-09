@@ -337,19 +337,19 @@
 
     <!-- NAV -->
     <nav>
-        <a href="../index.html" style="text-decoration:none">
+        <a href="/" style="text-decoration:none">
             <div class="nav-logo">5<span>p</span>yd3r</div>
         </a>
         <ul class="nav-links">
-            <li><a href="../index.html#about">about</a></li>
-            <li><a href="../index.html#skills">skills</a></li>
-            <li><a href="../index.html#projects">projects</a></li>
-            <li><a href="../index.html#ctf">ctf</a></li>
-            <li><a href="../index.html#experience">experience</a></li>
-            <li><a href="../index.html#certifications">certs</a></li>
-            <li><a href="../index.html#publications">papers</a></li>
-            <li><a href="../index.html#contact">contact</a></li>
-            <li><a href="blog.html" style="color:var(--accent)">blog</a></li>
+            <li><a href="/#about">about</a></li>
+            <li><a href="/#skills">skills</a></li>
+            <li><a href="/#projects">projects</a></li>
+            <li><a href="/#ctf">ctf</a></li>
+            <li><a href="/#experience">experience</a></li>
+            <li><a href="/#certifications">certs</a></li>
+            <li><a href="/#publications">papers</a></li>
+            <li><a href="/#contact">contact</a></li>
+            <li><a href="/blog/" style="color:var(--accent)">blog</a></li>
         </ul>
     </nav>
 
@@ -468,7 +468,7 @@
             }).toUpperCase();
 
             return `
-            <a class="post-card" href="post.html?p=${encodeURIComponent(p.path)}"
+            <a class="post-card" href="/blog/posts/?p=${encodeURIComponent(p.path)}"
                style="transition-delay:${i * 0.07}s">
                 <div class="post-platform ${platform}">${platform}</div>
                 <div class="post-date">${date}</div>
