@@ -632,14 +632,14 @@
                     const prev = posts[idx + 1];
                     const btn  = document.getElementById('prev-btn');
                     btn.style.display   = 'block';
-                    btn.href            = `/blog/posts?p=${encodeURIComponent(prev.path)}`;
+                    btn.href            = `/blog/posts/?p=${encodeURIComponent(prev.path)}`;
                     document.getElementById('prev-title').textContent = prev.title;
                 }
                 if (idx > 0) {
                     const next = posts[idx - 1];
                     const btn  = document.getElementById('next-btn');
                     btn.style.display   = 'block';
-                    btn.href            = `/blog/posts?p=${encodeURIComponent(next.path)}`;
+                    btn.href            = `/blog/posts/?p=${encodeURIComponent(next.path)}`;
                     document.getElementById('next-title').textContent = next.title;
                 }
             } catch(e) { /* silent fail */ }

@@ -469,7 +469,7 @@
 
             return `
             <a class="post-card" href="/blog/posts/?p=${encodeURIComponent(p.path)}"
-               style="transition-delay:${i * 0.07}s">
+                style="transition-delay:${Math.min(i * 0.07, 0.5)}s"
                 <div class="post-platform ${platform}">${platform}</div>
                 <div class="post-date">${date}</div>
                 <div class="post-title">${p.title}</div>
@@ -484,7 +484,7 @@
         // Stagger reveal
         requestAnimationFrame(() => {
             grid.querySelectorAll('.post-card').forEach((card, i) => {
-                setTimeout(() => card.classList.add('visible'), i * 70);
+                setTimeout(() => card.classList.add('visible'), Math.min(i * 70, 500));
             });
             if (typeof updateScrollbar === 'function') updateScrollbar();
         });
