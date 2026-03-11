@@ -4,9 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "saturday"
-      time: "01:10"
-      timezone: "UTC"
+      day: "friday"
+      time: "22:00"
+      timezone: "Asia/Kolkata"
     open-pull-requests-limit: 10
     assignees:
       - "3rr0r-505"
