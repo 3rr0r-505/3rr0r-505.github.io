@@ -55,7 +55,7 @@ jobs:
         run: cat secret-report.md >> $GITHUB_STEP_SUMMARY
       - name: Upload secret scan report
         if: always()
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: secret-scan-report
           path: secret-report.md
@@ -159,7 +159,7 @@ jobs:
         run: cat semgrep-report.md >> $GITHUB_STEP_SUMMARY
       - name: Upload semgrep report
         if: always()
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: code-analysis-report
           path: |
@@ -236,7 +236,7 @@ jobs:
 
       - name: Upload link check report
         if: always()
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: link-check-report
           path: lychee-report.md
@@ -367,7 +367,7 @@ jobs:
         run: cat integrity-report.md >> $GITHUB_STEP_SUMMARY
       - name: Upload integrity report
         if: always()
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: posts-integrity-report
           path: integrity-report.md
