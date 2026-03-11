@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "01:10"
+      timezone: "UTC"
+    labels:
+      - "dependabot"
+    commit-message:
+      prefix: "ci"

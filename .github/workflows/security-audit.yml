@@ -10,9 +10,6 @@ on:
 permissions:
   contents: read
   issues: write           # Needed to open issues on critical findings
-  
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
 
@@ -24,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0  # Full history for trufflehog
 
@@ -58,7 +55,7 @@ jobs:
         run: cat secret-report.md >> $GITHUB_STEP_SUMMARY
       - name: Upload secret scan report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: secret-scan-report
           path: secret-report.md
@@ -66,7 +63,7 @@ jobs:
 
       - name: Open issue on critical finding
         if: steps.trufflehog.outcome == 'failure'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v7.0.1
         with:
           script: |
             const title = `🔑 [SECURITY] Secret/Credential Detected — ${new Date().toISOString().split('T')[0]}`;
@@ -87,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Install semgrep
         run: pip install semgrep
@@ -162,7 +159,7 @@ jobs:
         run: cat semgrep-report.md >> $GITHUB_STEP_SUMMARY
       - name: Upload semgrep report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: code-analysis-report
           path: |
@@ -172,7 +169,7 @@ jobs:
 
       - name: Open issue on high severity findings
         if: always()
-        uses: actions/github-script@v7
+        uses: actions/github-script@v7.0.1
         with:
           script: |
             const fs = require('fs');
@@ -200,7 +197,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Run Lychee link checker
         id: lychee
@@ -239,7 +236,7 @@ jobs:
 
       - name: Upload link check report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: link-check-report
           path: lychee-report.md
@@ -247,7 +244,7 @@ jobs:
 
       - name: Open issue on broken links
         if: steps.lychee.outcome == 'failure'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v7.0.1
         with:
           script: |
             const fs = require('fs');
@@ -270,7 +267,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Check posts.json integrity
         id: integrity
@@ -370,7 +367,7 @@ jobs:
         run: cat integrity-report.md >> $GITHUB_STEP_SUMMARY
       - name: Upload integrity report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: posts-integrity-report
           path: integrity-report.md
@@ -378,7 +375,7 @@ jobs:
 
       - name: Open issue on integrity failure
         if: steps.integrity.outcome == 'failure'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v7.0.1
         with:
           script: |
             const fs = require('fs');
@@ -403,7 +400,7 @@ jobs:
     if: always()
     steps:
       - name: Generate summary
-        uses: actions/github-script@v7
+        uses: actions/github-script@v7.0.1
         with:
           script: |
             const jobs = {
