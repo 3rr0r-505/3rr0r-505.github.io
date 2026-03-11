@@ -208,6 +208,7 @@ jobs:
             --no-progress
             --accept 200,201,202,203,204,206,301,302,307,308,429
             --timeout 20
+            --root-url https://5pyd3r.is-a.dev
             --exclude "^mailto:"
             --exclude "^javascript:"
             --exclude "localhost"
