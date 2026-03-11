@@ -142,7 +142,7 @@
 
             el.textContent = suffix === 'cgpa'
                 ? (v / 100).toFixed(2)
-                : v + (p >= 1 && (target === 3 || target > 5) ? '+' : '');
+                : v + (p >= 1 && target > 0 && el.dataset.noplus === undefined && suffix !== 'cgpa' ? '+' : '');
 
             if (p < 1) requestAnimationFrame(run);
         };

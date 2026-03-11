@@ -152,7 +152,7 @@
             <div class="stat-label">// TOOLS BUILT</div>
             </div>
             <div>
-            <div class="stat-num" data-count="1">0</div>          <!-- Publications -->
+            <div class="stat-num" data-count="1" data-noplus>0</div>          <!-- Publications -->
             <div class="stat-label">// PUBLICATION</div>
             </div>
             <div>
@@ -408,80 +408,70 @@
         ═══════════════════════════════════════════════════════════ -->
     <section id="ctf">
         <div class="section-header reveal">
-        <span class="section-num">04 //</span>
-        <h2 class="section-title">CTF &amp; PLATFORMS</h2>
-        <div class="section-line"></div>
+            <span class="section-num">04 //</span>
+            <h2 class="section-title">CTF &amp; PLATFORMS</h2>
+            <div class="section-line"></div>
         </div>
 
         <div class="ctf-grid">
 
-        <!-- TryHackMe card — green themed -->
-        <div class="ctf-platform ctf-thm reveal">
+            <!-- TryHackMe -->
+            <div class="ctf-platform ctf-thm reveal">
             <div class="ctf-platform-header">
-            <div class="ctf-platform-icon">🟢</div>
-            <div>
+                <div class="ctf-platform-icon">🟢</div>
+                <div>
                 <div class="ctf-platform-name">TryHackMe</div>
                 <div class="ctf-platform-url">tryhackme.com/p/5pyD3R</div>
-            </div>
+                </div>
             </div>
 
-            <!-- Stats grid — update numbers here -->
             <div class="ctf-stats">
-            <div class="ctf-stat">
-                <div class="ctf-stat-num">5+</div>
-                <div class="ctf-stat-label">CERTS EARNED</div>
-            </div>
-            <div class="ctf-stat">
-                <div class="ctf-stat-num">🔥</div>
-                <div class="ctf-stat-label">ACTIVE STREAK</div>
-            </div>
-            </div>
-
-            <!-- Achievement badges — colors: green | cyan | red -->
-            <div class="ctf-badges">
-            <span class="ctf-badge green">Jr. Penetration Tester</span>
-            <span class="ctf-badge green">CompTIA Pentest+</span>
-            <span class="ctf-badge cyan">Web Fundamentals</span>
-            <span class="ctf-badge cyan">Intro to Cyber Security</span>
-            <span class="ctf-badge red">Advent of Cyber 2024</span>
+                <div class="ctf-stat">
+                <div class="ctf-stat-num" style="font-size:1rem;padding-top:6px;">Hacker</div>
+                <div class="ctf-stat-label">RANK</div>
+                </div>
+                <div class="ctf-stat">
+                <div class="ctf-stat-num" data-count="25" data-suffix="">0</div>
+                <div class="ctf-stat-label">BADGES</div>
+                </div>
+                <div class="ctf-stat" style="grid-column:span 2;">
+                <div class="ctf-stat-num" data-count="47" data-suffix="">0</div>
+                <div class="ctf-stat-label">ROOMS COMPLETED</div>
+                </div>
             </div>
 
-            <!-- View profile CTA -->
             <a href="https://tryhackme.com/p/5pyD3R" class="ctf-link" target="_blank" rel="noopener">VIEW PROFILE ↗</a>
-        </div>
+            </div>
 
-        <!-- HackTheBox card — placeholder / coming soon -->
-        <div class="ctf-platform reveal">
+            <!-- HackTheBox -->
+            <div class="ctf-platform reveal">
             <div class="ctf-platform-header">
-            <div class="ctf-platform-icon">🟩</div>
-            <div>
+                <div class="ctf-platform-icon">🟩</div>
+                <div>
                 <div class="ctf-platform-name" style="color:var(--accent)">HackTheBox</div>
-                <div class="ctf-platform-url">hackthebox.com</div>
-            </div>
-            </div>
-
-            <!-- Replace this .ctf-coming block with real stats when HTB profile is set up -->
-            <div class="ctf-coming">
-            <div class="ctf-coming-icon">⚡</div>
-            <div class="ctf-coming-text">
-                HTB profile incoming.<br/>Currently grinding TryHackMe.<br/>
-                <span style="color:var(--accent)">Watch this space.</span>
-            </div>
+                <div class="ctf-platform-url">app.hackthebox.com/profile/907310</div>
+                </div>
             </div>
 
-            <!-- Focus areas for HTB — update as you progress -->
-            <div class="skill-cat-title" style="margin-bottom:14px">// AREAS OF FOCUS</div>
-            <div class="skill-tags">
-            <span class="skill-tag red">Network Exploitation</span>
-            <span class="skill-tag red">Web App Attacks</span>
-            <span class="skill-tag red">Privilege Escalation</span>
-            <span class="skill-tag">OSINT</span>
-            <span class="skill-tag">AD Attacks</span>
-            <span class="skill-tag">Malware Analysis</span>
+            <div class="ctf-stats">
+                <div class="ctf-stat">
+                <div class="ctf-stat-num" style="font-size:1rem;padding-top:6px;color:var(--accent);">Noob</div>
+                <div class="ctf-stat-label">RANK</div>
+                </div>
+                <div class="ctf-stat">
+                <div class="ctf-stat-num" data-count="0" data-suffix="" style="color:var(--accent);">0</div>
+                <div class="ctf-stat-label">BADGES</div>
+                </div>
+                <div class="ctf-stat" style="grid-column:span 2;">
+                <div class="ctf-stat-num" data-count="0" data-suffix="" style="color:var(--accent);">0</div>
+                <div class="ctf-stat-label">MACHINES PWNED</div>
+                </div>
             </div>
+
+            <a href="https://app.hackthebox.com/users/907310?profile-top-tab=machines&ownership-period=1M&profile-bottom-tab=prolabs" class="ctf-link" style="background:var(--accent);color:var(--bg);" target="_blank" rel="noopener">VIEW PROFILE ↗</a>
+            </div>
+
         </div>
-
-        </div><!-- /ctf-grid -->
     </section><!-- /ctf -->
 
     <!-- ═══════════════════════════════════════════════════════════
