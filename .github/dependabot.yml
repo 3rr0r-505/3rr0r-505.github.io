@@ -7,7 +7,15 @@ updates:
       day: "saturday"
       time: "01:10"
       timezone: "UTC"
+    open-pull-requests-limit: 10
+    assignees:
+      - "3rr0r-505"
     labels:
       - "dependabot"
     commit-message:
       prefix: "ci"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
