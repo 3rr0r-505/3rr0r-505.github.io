@@ -3,6 +3,8 @@ name: 🛡️ Passive Security & Integrity Audit
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   schedule:
     - cron: '0 5 * * 6'   # Every Saturday at 10:30 AM IST
   workflow_dispatch:      # Manual trigger from Actions tab
