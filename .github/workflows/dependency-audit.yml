@@ -1,0 +1,227 @@
+name: 🔍 Marked.js Vulnerability Audit
+
+on:
+  schedule:
+    - cron: '0 5 * * 6'   # Every Saturday at 10:30 AM IST
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit-marked:
+    name: 🛡️ Audit marked.js
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Detect marked.js version from filename
+        id: detect
+        run: |
+          FILE=$(find assets/js -name "marked-*.min.js" | head -n 1)
+          if [ -z "$FILE" ]; then
+            echo "[!] No marked-*.min.js found in assets/js/"
+            exit 1
+          fi
+          VERSION=$(echo "$FILE" | grep -oP '(?<=marked-)[0-9]+\.[0-9]+\.[0-9]+')
+          if [ -z "$VERSION" ]; then
+            echo "[!] Could not extract version from filename: $FILE"
+            exit 1
+          fi
+          echo "file=$FILE" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "✅ Detected marked.js version: $VERSION (from $FILE)"
+
+      - name: Fetch GitHub Advisory Database for marked
+        id: advisories
+        run: |
+          curl -s \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/advisories?ecosystem=npm&package=marked&per_page=10" \
+            -o advisories.json
+          echo "✅ Advisories fetched"
+
+      - name: Fetch latest marked version from npm
+        id: npm
+        run: |
+          curl -s "https://registry.npmjs.org/marked/latest" -o npm-latest.json
+          LATEST=$(python3 -c "import json; print(json.load(open('npm-latest.json'))['version'])")
+          echo "latest=$LATEST" >> $GITHUB_OUTPUT
+          echo "✅ Latest marked version on npm: $LATEST"
+
+      - name: Check advisories against detected version
+        id: check
+        run: |
+          python3 << 'EOF'
+          import json, sys, os
+
+          detected = os.environ["DETECTED_VERSION"]
+          report   = []
+          vuln     = False
+
+          def version_tuple(v):
+              try:
+                  return tuple(int(x) for x in v.strip().lstrip("v>=<^~").split(".")[:3])
+              except:
+                  return (0, 0, 0)
+
+          def version_in_range(version, ranges):
+              """
+              Check if version falls within any of the advisory's affected ranges.
+              Ranges is a list of dicts with 'introduced' and optionally 'fixed'.
+              """
+              v = version_tuple(version)
+              for r in ranges:
+                  introduced = version_tuple(r.get("introduced", "0.0.0"))
+                  fixed      = r.get("fixed")
+                  if fixed:
+                      fixed = version_tuple(fixed)
+                      if introduced <= v < fixed:
+                          return True
+                  else:
+                      if v >= introduced:
+                          return True
+              return False
+
+          try:
+              with open("advisories.json") as f:
+                  advisories = json.load(f)
+          except Exception as e:
+              print(f"[!] Failed to parse advisories: {e}")
+              sys.exit(1)
+
+          if not isinstance(advisories, list):
+              print(f"[!] Unexpected advisories format")
+              sys.exit(1)
+
+          for adv in advisories:
+              cve_id      = adv.get("cve_id") or adv.get("ghsa_id", "N/A")
+              severity    = adv.get("severity", "unknown").upper()
+              summary     = adv.get("summary", "No summary available.")
+              url         = adv.get("html_url", "")
+
+              # Extract affected version ranges for npm/marked
+              affected    = adv.get("vulnerabilities", [])
+              ranges      = []
+              for a in affected:
+                  pkg = a.get("package", {})
+                  if pkg.get("ecosystem", "").lower() == "npm" and pkg.get("name", "").lower() == "marked":
+                      for r in a.get("vulnerable_version_range", "").split(","):
+                          r = r.strip()
+                          # Convert semver range string to introduced/fixed dict
+                          if ">=" in r and "<" in r:
+                              parts = r.split(",") if "," in r else [r]
+                              intro, fix = None, None
+                              for p in r.replace(">=","").replace("<","||").split("||"):
+                                  p = p.strip()
+                                  if not p: continue
+                                  if intro is None: intro = p
+                                  else: fix = p
+                              if intro:
+                                  ranges.append({"introduced": intro, "fixed": fix})
+                          elif ">=" in r:
+                              ranges.append({"introduced": r.replace(">=","").strip()})
+
+              if ranges and version_in_range(detected, ranges):
+                  vuln = True
+                  report.append({
+                      "cve":      cve_id,
+                      "severity": severity,
+                      "summary":  summary,
+                      "url":      url,
+                  })
+
+          # Write outputs
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"vuln={'true' if vuln else 'false'}\n")
+
+          with open("vuln-report.json", "w") as f:
+              json.dump(report, f, indent=2)
+
+          if vuln:
+              print(f"⚠️  {len(report)} vulnerability/vulnerabilities found affecting marked v{detected}!")
+              for r in report:
+                  print(f"   - {r['cve']} [{r['severity']}]: {r['summary']}")
+          else:
+              print(f"✅ marked v{detected} — no known vulnerabilities found.")
+
+          EOF
+        env:
+          DETECTED_VERSION: ${{ steps.detect.outputs.version }}
+
+      - name: Log version status
+        run: |
+          DETECTED="${{ steps.detect.outputs.version }}"
+          LATEST="${{ steps.npm.outputs.latest }}"
+          if [ "$DETECTED" != "$LATEST" ]; then
+            echo "⚠️ Newer version available: marked v$LATEST (you have v$DETECTED)"
+            echo "   Update when convenient — only required if a vulnerability is found."
+          else
+            echo "✅ marked v$DETECTED is the latest version."
+          fi
+
+      - name: Check for existing open issue
+        id: existing
+        if: steps.check.outputs.vuln == 'true'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              state: 'open',
+              labels: 'dependency vulnerability',
+            });
+            const title  = `🔴 [SECURITY] marked v${{ steps.detect.outputs.version }} vulnerability detected`;
+            const exists = issues.data.some(i => i.title.startsWith(title.split('—')[0].trim()));
+            core.setOutput('exists', exists ? 'true' : 'false');
+
+      - name: Open issue on vulnerability found
+        if: steps.check.outputs.vuln == 'true' && steps.existing.outputs.exists == 'false'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs      = require('fs');
+            const version = '${{ steps.detect.outputs.version }}';
+            const latest  = '${{ steps.npm.outputs.latest }}';
+            const date    = new Date().toISOString().split('T')[0];
+
+            let report = [];
+            try { report = JSON.parse(fs.readFileSync('vuln-report.json', 'utf8')); } catch(e) {}
+
+            const findings = report.map(r =>
+              `### ${r.cve} — ${r.severity}\n**Summary:** ${r.summary}\n**Details:** ${r.url}`
+            ).join('\n\n');
+
+            const body = [
+              `## Marked.js Vulnerability Alert`,
+              ``,
+              `**Detected version:** \`marked-${version}.min.js\` (in \`assets/js/\`)`,
+              `**Latest version:** \`${latest}\``,
+              `**Checked on:** ${date}`,
+              ``,
+              `### Vulnerabilities Found`,
+              findings,
+              ``,
+              `### Action Required`,
+              `1. Download \`marked.min.js\` v${latest} from https://cdn.jsdelivr.net/npm/marked@${latest}/marked.min.js`,
+              `2. Rename to \`marked-${latest}.min.js\``,
+              `3. Replace \`assets/js/marked-${version}.min.js\``,
+              `4. Update the import in \`blog/posts/index.html\``,
+              `5. Test posts render correctly`,
+              `6. Close this issue`,
+              ``,
+              `> Auto-generated by marked.js vulnerability audit workflow.`,
+            ].join('\n');
+
+            await github.rest.issues.create({
+              owner:     context.repo.owner,
+              repo:      context.repo.repo,
+              title:     `🔴 [SECURITY] marked v${version} vulnerability detected — ${date}`,
+              body,
+              labels:    ['dependency vulnerability'],
+              assignees: ['3rr0r-505'],
+            });
