@@ -18,7 +18,7 @@ on:
     # The branches below must be a subset of the branches above
     branches: ["main"]
   schedule:
-    - cron: "0 5 * * 6"   # Every Saturday at 10:30 AM IST
+    - cron: "15 5 * * 6"   # Every Saturday at 10:45 AM IST
 
 permissions:
   contents: read
