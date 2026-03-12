@@ -124,14 +124,31 @@ unless you use an absolute URL (imgur, github raw, etc):
   ![description](https://i.imgur.com/example.png)
 
 
+── IMAGE OPTIMIZATION ───────────────────────────────────
+
+Before committing, compress images in your assets/ folder:
+
+  python post-img-optimizer.py --dir "YYYY-MM-DD-short-name/assets"
+
+Optional quality flag (default: 80):
+
+  python post-img-optimizer.py --dir "YYYY-MM-DD-short-name/assets" --quality 85
+
+This converts all PNG/JPG/JPEG/GIF/TIFF/BMP → WebP,
+updates references in your .md file automatically,
+and deletes the originals.
+
+
 ── WORKFLOW ─────────────────────────────────────────────
 
 1. Write your writeup in _posts/ (file or folder format)
 2. Add frontmatter at the top
-3. Run:  python blog-manager.py
-4. Commit and push:
+3. Optimize images (if folder-based post):
+        python post-img-optimizer.py --dir "YYYY-MM-DD-short-name/assets"
+4. Run:  python blog-manager.py
+5. Commit and push:
         git add .
-        git commit -m "add: htb-monitostwo writeup"
+        git commit -m "add: htb-monitorstwo writeup"
         git push
 
 To draft without publishing → put it in _posts/_drafts/

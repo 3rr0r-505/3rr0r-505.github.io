@@ -29,6 +29,6 @@
     "platform": "THM",
     "difficulty": "Easy",
     "description": "Linux privilege escalation challenge involving SUID binaries, sudo misconfigurations, and kernel exploits to gain root access on a compromised system.",
-    "path": "blog/_posts/2026-03-04-RootMe/2026-03-04-RootMe.md"
+    "path": "blog/_posts/2024-12-07-RootMe/2024-12-07-RootMe.md"
   }
 ]
