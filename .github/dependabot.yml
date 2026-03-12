@@ -7,7 +7,7 @@ updates:
       day: "friday"
       time: "22:00"
       timezone: "Asia/Kolkata"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 15
     assignees:
       - "3rr0r-505"
     labels:
