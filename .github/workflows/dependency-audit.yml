@@ -166,7 +166,7 @@ jobs:
       - name: Check for existing open issue
         id: existing
         if: steps.check.outputs.vuln == 'true'
-        uses: actions/github-script@v6
+        uses: actions/github-script@v8
         with:
           script: |
             const issues = await github.rest.issues.listForRepo({
@@ -181,7 +181,7 @@ jobs:
 
       - name: Open issue on vulnerability found
         if: steps.check.outputs.vuln == 'true' && steps.existing.outputs.exists == 'false'
-        uses: actions/github-script@v6
+        uses: actions/github-script@v8
         with:
           script: |
             const fs      = require('fs');
