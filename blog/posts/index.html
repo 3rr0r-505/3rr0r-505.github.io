@@ -701,7 +701,11 @@
 
             } catch(e) {
                 loading.style.display = 'none';
-                mdBody.innerHTML = `<div class="post-error">[ERROR] could not load writeup: ${postPath}<br/>make sure the file exists in _posts/</div>`;
+                mdBody.innerHTML = `<div class="post-error">[ERROR] could not load writeup: <span class="post-error-path"></span><br/>make sure the file exists in _posts/</div>`;
+                const errorPathEl = mdBody.querySelector('.post-error-path');
+                if (errorPathEl) {
+                    errorPathEl.textContent = postPath || '';
+                }
                 mdBody.style.display = 'block';
             }
         }
