@@ -132,7 +132,7 @@ Before committing, compress images in your assets/ folder:
 
 Optional quality flag (default: 80):
 
-  python post-img-optimizer.py --dir "YYYY-MM-DD-short-name/assets" --quality 85
+  python blogpost-manager.py --dir "YYYY-MM-DD-short-name/assets" --quality <85>
 
 This converts all PNG/JPG/JPEG/GIF/TIFF/BMP → WebP,
 updates references in your .md file automatically,
