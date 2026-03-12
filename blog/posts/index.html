@@ -11,6 +11,7 @@
     <!-- marked.js — markdown renderer, no build tools needed -->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>-->
     <script src="/assets/js/marked-9.1.6.min.js"></script>
+    <script src="/assets/js/dompurify-3.3.3.min.js"></script>
 
     <!-- =========================🦋 CSS========================= -->
     <style>
@@ -674,7 +675,7 @@
                 // Fix asset paths for folder-based posts
                 html = resolveAssetPaths(html, postPath);
 
-                mdBody.innerHTML = html;
+                mdBody.innerHTML = DOMPurify.sanitize(html);
 
                 addCopyButtons(mdBody);
                 buildTOC(mdBody);
