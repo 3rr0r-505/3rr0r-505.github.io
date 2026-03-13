@@ -7,7 +7,7 @@
 
 ## File Structure
 ```
-C:.
+nullbyte/
 │   .gitignore
 │   .nojekyll
 │   .pre-commit-config.yaml
@@ -126,4 +126,5 @@ C:.
                 │
                 └───assets
                         banner.jpg
+
 ```
