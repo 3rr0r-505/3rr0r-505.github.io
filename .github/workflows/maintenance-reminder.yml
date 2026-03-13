@@ -1,0 +1,216 @@
+name: "🗓️ Monthly Maintenance Reminder"
+
+on:
+  schedule:
+    - cron: '30 14 1-7 * 5'  # First Friday of every month at 20:00 IST (14:30 UTC)
+  workflow_dispatch:          # Manual trigger from Actions tab anytime
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  maintenance-reminder:
+    name: 📋 Open Maintenance Checklist
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@58077d3c7e43986b6b15fba718e8ea69e387dfcc # v2.15.1
+        with:
+          egress-policy: audit
+
+      - name: Open monthly maintenance issue
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          script: |
+            const now     = new Date();
+            const month   = now.toLocaleString('en-US', { month: 'long' });
+            const year    = now.getFullYear();
+            const today   = now.toISOString().split('T')[0];
+            const repo    = context.repo.owner + '/' + context.repo.repo;
+            const repoUrl = 'https://github.com/' + repo;
+            const trigger = context.eventName;
+
+            const title = '[MAINTENANCE] Monthly Manual Checklist - ' + month + ' ' + year;
+
+            const body = [
+              '## What is this issue?',
+              '',
+              'This is your **monthly manual maintenance reminder** for the portfolio site.',
+              'It is auto-generated on the first Friday of every month.',
+              '',
+              'Most things on this site are automated - but some things still need a human eye.',
+              'Go through each section below, check it off, and close this issue when done.',
+              '',
+              'No rush. No emergency. Just good hygiene.',
+              '',
+              '---',
+              '',
+              '## 1. Update Self-Hosted JavaScript Libraries',
+              '',
+              'These libraries are hosted locally in `assets/js/` and **Dependabot cannot track them**.',
+              'You must check for updates manually.',
+              '',
+              '### marked.js (Markdown renderer)',
+              '- Current file: `assets/js/marked-*.min.js` - check the filename for the current version',
+              '- Check latest release: https://github.com/markedjs/marked/releases',
+              '- Download latest `marked.min.js`: https://cdn.jsdelivr.net/npm/marked/marked.min.js',
+              '- **What to do:**',
+              '  1. Compare your version with the latest on the releases page',
+              '  2. If newer version exists -> download the new `marked.min.js`',
+              '  3. Rename it to `marked-X.X.X.min.js` (e.g. `marked-9.2.0.min.js`)',
+              '  4. Replace the old file in `assets/js/`',
+              '  5. Update the `<script src=...>` tag in `blog/posts/index.html`',
+              '  6. Delete the old versioned file',
+              '',
+              '### DOMPurify (XSS sanitizer)',
+              '- Current file: `assets/js/dompurify-*.min.js` - check the filename for the current version',
+              '- Check latest release: https://github.com/cure53/DOMPurify/releases',
+              '- Download latest `purify.min.js`: https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js',
+              '- **What to do:**',
+              '  1. Compare your version with the latest on the releases page',
+              '  2. If newer version exists -> download the new `purify.min.js`',
+              '  3. Rename it to `dompurify-X.X.X.min.js`',
+              '  4. Replace the old file in `assets/js/`',
+              '  5. Update the `<script src=...>` tag in `blog/posts/index.html`',
+              '  6. Delete the old versioned file',
+              '',
+              '---',
+              '',
+              '## 2. Re-Scan Workflows with StepSecurity',
+              '',
+              'StepSecurity hardens your GitHub Actions workflows by pinning actions to commit SHAs',
+              'and adding least-privilege permissions. After any workflow change, it is worth rescanning.',
+              '',
+              '- Visit: https://app.stepsecurity.io/securerepo',
+              '- **What to do:**',
+              '  1. Paste your repo URL: `' + repoUrl + '`',
+              '  2. Click Scan',
+              '  3. If it opens a PR -> review the diff (it will only touch `.github/workflows/` files)',
+              '  4. Merge the PR if the changes look correct',
+              '',
+              '---',
+              '',
+              '## 3. Review Dependabot PRs',
+              '',
+              'Dependabot automatically opens PRs to update your GitHub Actions versions.',
+              'These are safe to merge but need your approval.',
+              '',
+              '- View open Dependabot PRs: ' + repoUrl + '/pulls?q=is%3Apr+is%3Aopen+author%3Aapp%2Fdependabot',
+              '- **What to do:**',
+              '  1. Open each PR',
+              '  2. Check what changed (usually just a version bump in a `.yml` file)',
+              '  3. Merge if it looks correct',
+              '  4. If something looks suspicious -> do not merge, leave a comment',
+              '',
+              '---',
+              '',
+              '## 4. Check Scorecard Security Alerts',
+              '',
+              'Scorecard grades your repo security posture (branch protection, SAST, secrets scanning, etc.)',
+              'and reports alerts to the Security tab.',
+              '',
+              '- View alerts: ' + repoUrl + '/security/code-scanning?tool=Scorecard',
+              '- **What to do:**',
+              '  1. Open the link above',
+              '  2. Check for any new HIGH or CRITICAL alerts',
+              '  3. For each alert -> read the description and click "Show more" for remediation steps',
+              '  4. Alerts that say "auto-resolves" - just leave them',
+              '  5. Alerts that need a fix - follow the remediation steps',
+              '',
+              '---',
+              '',
+              '## 5. Review Last Security Audit Run',
+              '',
+              'Your `security-audit.yml` runs every Saturday and checks for secrets, XSS, broken links,',
+              'and blog integrity. Check the last run to make sure everything passed.',
+              '',
+              '- View last run: ' + repoUrl + '/actions/workflows/security-audit.yml',
+              '- **What to do:**',
+              '  1. Open the latest run',
+              '  2. Check that all 5 jobs show green checkmarks',
+              '  3. If any job failed -> click into it and read the log',
+              '  4. If TruffleHog or Semgrep flagged something -> investigate immediately',
+              '  5. If link-check failed -> find the broken link and fix it in the HTML',
+              '',
+              '---',
+              '',
+              '## 6. Review Last CodeQL Scan',
+              '',
+              'CodeQL scans your JavaScript and HTML for security vulnerabilities like XSS.',
+              '',
+              '- View CodeQL alerts: ' + repoUrl + '/security/code-scanning?tool=CodeQL',
+              '- **What to do:**',
+              '  1. Check for any open alerts',
+              '  2. Read the description - CodeQL explains exactly what the problem is and where',
+              '  3. Fix the flagged line if it is a real issue',
+              '  4. If it is a false positive -> dismiss it with reason "False positive"',
+              '',
+              '---',
+              '',
+              '## 7. Check for Unpublished Draft Posts',
+              '',
+              'You might have posts sitting in `_drafts/` that are ready to go live.',
+              '',
+              '- Location: `blog/_posts/_drafts/`',
+              '- **What to do:**',
+              '  1. Open the `_drafts/` folder',
+              '  2. If there are posts ready -> move them to `blog/_posts/`',
+              '  3. Run `python blog-manager.py` to update `posts.json`',
+              '  4. Commit and push',
+              '',
+              '---',
+              '',
+              '## 8. Verify the Live Site',
+              '',
+              'Just open the site and make sure everything looks right. Takes 2 minutes.',
+              '',
+              '- Live site: https://5pyd3r.is-a.dev',
+              '- Blog: https://5pyd3r.is-a.dev/blog/',
+              '- **What to do:**',
+              '  1. Open the site - does it load? Does it look right?',
+              '  2. Open a blog post - does markdown render correctly?',
+              '  3. Click a few links - are they working?',
+              '  4. Check on mobile if you have a phone nearby',
+              '',
+              '---',
+              '',
+              '## When You are Done',
+              '',
+              '- Check off everything above',
+              '- Close this issue',
+              '- See you next month',
+              '',
+              '---',
+              '',
+              '> Auto-generated on ' + today + ' by the monthly maintenance reminder workflow.',
+              '> Triggered by: `' + trigger + '`',
+              '> Repo: `' + repo + '`',
+            ].join('\n');
+
+            // Avoid duplicate issues if workflow is re-run in the same month
+            const existing = await github.rest.issues.listForRepo({
+              owner:    context.repo.owner,
+              repo:     context.repo.repo,
+              state:    'open',
+              labels:   'maintenance',
+              per_page: 10,
+            });
+
+            const duplicate = existing.data.find(i => i.title === title);
+            if (duplicate) {
+              console.log('Issue already exists: #' + duplicate.number + ' - skipping.');
+              return;
+            }
+
+            await github.rest.issues.create({
+              owner:     context.repo.owner,
+              repo:      context.repo.repo,
+              title,
+              body,
+              labels:    ['maintenance'],
+              assignees: ['3rr0r-505'],
+            });
+
+            console.log('Maintenance issue created for ' + month + ' ' + year);
