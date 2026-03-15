@@ -44,7 +44,7 @@ jobs:
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@883eaf2b4c9f76e44e46ce84e4977b7a9c753b7f # v3.14.1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
