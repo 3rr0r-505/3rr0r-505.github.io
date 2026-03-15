@@ -3,7 +3,7 @@
 ## Reporting a Vulnerability
 
 If you discover a security vulnerability in this project, please report it via:
-- **GitHub:** Open a private security advisory at Security → Advisories → New
+- **GitHub:** Open a private security advisory [here](https://github.com/3rr0r-505/3rr0r-505.github.io/security/advisories/new)
 
 ## Response Timeline
 
