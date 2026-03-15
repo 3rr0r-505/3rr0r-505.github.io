@@ -48,6 +48,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: 3rr0r-505-github-io
-          directory: .
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: pages deploy . --project-name=3rr0r-505-github-io --branch=main
