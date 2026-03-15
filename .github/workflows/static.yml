@@ -7,10 +7,7 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-  deployments: write
-
+  
 concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: true
@@ -19,6 +16,11 @@ jobs:
   deploy:
     name: 📦 Build & Deploy
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+      deployments: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
