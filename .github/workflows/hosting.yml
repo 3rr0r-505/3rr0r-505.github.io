@@ -28,7 +28,7 @@ jobs:
         id: check
         run: |
           check_url() {
-            curl -o /dev/null -s -w "%{http_code}" --max-time 10 "$1"
+            curl -o /dev/null -s -w "%{http_code}" -L --max-time 10 "$1"
           }
 
           all_up=true
