@@ -27,25 +27,40 @@ jobs:
       - name: Check endpoints
         id: check
         run: |
-          declare -A sites
-          sites["5pyd3r.is-a.dev"]="https://5pyd3r.is-a.dev"
-          sites["5pyd3rr.is-a.dev"]="https://5pyd3rr.is-a.dev"
-          sites["3rr0r-505-github-io.pages.dev"]="https://3rr0r-505-github-io.pages.dev"
-          sites["3rr0r-505.github.io"]="https://3rr0r-505.github.io"
+          check_url() {
+            curl -o /dev/null -s -w "%{http_code}" --max-time 10 "$1"
+          }
 
           all_up=true
           report=""
 
-          for name in "${!sites[@]}"; do
-            url="${sites[$name]}"
-            status=$(curl -o /dev/null -s -w "%{http_code}" --max-time 10 "$url")
-            if [ "$status" -eq 200 ]; then
-              report+="- ✅ \`$name\` — UP ($status)\n"
-            else
-              report+="- ❌ \`$name\` — DOWN ($status)\n"
-              all_up=false
-            fi
-          done
+          # Cloudflare pair
+          cf_direct=$(check_url "https://3rr0r-505-github-io.pages.dev")
+          cf_domain=$(check_url "https://5pyd3r.is-a.dev")
+
+          if [ "$cf_direct" -eq 200 ] && [ "$cf_domain" -eq 200 ]; then
+            report+="- ✅ Cloudflare — UP (pages.dev: $cf_direct, is-a.dev: $cf_domain)\n"
+          elif [ "$cf_direct" -eq 200 ] && [ "$cf_domain" -ne 200 ]; then
+            report+="- ⚠️ Cloudflare — HOST UP, DNS ISSUE (pages.dev: $cf_direct, is-a.dev: $cf_domain)\n"
+            all_up=false
+          else
+            report+="- ❌ Cloudflare — DOWN (pages.dev: $cf_direct, is-a.dev: $cf_domain)\n"
+            all_up=false
+          fi
+
+          # GitHub pair
+          gh_direct=$(check_url "https://3rr0r-505.github.io")
+          gh_domain=$(check_url "https://5pyd3rr.is-a.dev")
+
+          if [ "$gh_direct" -eq 200 ] && [ "$gh_domain" -eq 200 ]; then
+            report+="- ✅ GitHub Pages — UP (github.io: $gh_direct, is-a.dev: $gh_domain)\n"
+          elif [ "$gh_direct" -eq 200 ] && [ "$gh_domain" -ne 200 ]; then
+            report+="- ⚠️ GitHub Pages — HOST UP, DNS ISSUE (github.io: $gh_direct, is-a.dev: $gh_domain)\n"
+            all_up=false
+          else
+            report+="- ❌ GitHub Pages — DOWN (github.io: $gh_direct, is-a.dev: $gh_domain)\n"
+            all_up=false
+          fi
 
           echo "all_up=$all_up" >> $GITHUB_OUTPUT
           echo -e "$report" >> $GITHUB_STEP_SUMMARY
