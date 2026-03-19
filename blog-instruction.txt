@@ -128,7 +128,7 @@ unless you use an absolute URL (imgur, github raw, etc):
 
 Before committing, compress images in your assets/ folder:
 
-  python post-img-optimizer.py --dir "YYYY-MM-DD-short-name/assets"
+  python blogpost-manager.py --dir "YYYY-MM-DD-short-name/assets"
 
 Optional quality flag (default: 80):
 

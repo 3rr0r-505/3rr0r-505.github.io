@@ -1,6 +1,6 @@
 ---
 title: "Ditch VS Code Bloat — Run VSCodium Fully Portable on Windows"
-date: 2026-03-28
+date: 2026-03-08
 description: "Run VSCodium fully portable on Windows — all your extensions, settings, and cache in one folder, C:\ untouched. Includes a one-command update script."
 ---
 

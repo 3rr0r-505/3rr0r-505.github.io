@@ -1,7 +1,15 @@
 [
   {
+    "title": "HTB: Cap",
+    "date": "2026-03-19",
+    "platform": "HTB",
+    "difficulty": "Easy",
+    "description": "An easy HTB Linux box where an IDOR vulnerability exposes a packet capture leaking plaintext credentials, leading to initial access and a Python capability abuse for root.",
+    "path": "blog/_posts/2026-03-19-Cap/2026-03-19-Cap.md"
+  },
+  {
     "title": "Ditch VS Code Bloat — Run VSCodium Fully Portable on Windows",
-    "date": "2026-03-28",
+    "date": "2026-03-08",
     "platform": "OTHER",
     "difficulty": "",
     "description": "Run VSCodium fully portable on Windows — all your extensions, settings, and cache in one folder, C:\\ untouched. Includes a one-command update script.",
