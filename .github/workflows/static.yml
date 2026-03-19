@@ -50,4 +50,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy . --project-name=3rr0r-505-github-io --branch=main
+          command: pages deploy . --project-name=3rr0r-505-github-io --branch=main --commit-dirty=true
