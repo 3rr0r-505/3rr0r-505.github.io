@@ -88,7 +88,7 @@
     const emailDisplay = document.getElementById('email-display');
 
     if (emailLink && emailDisplay) {
-        const e     = ['samratdey', '.career', '@', 'gmail', '.com'];
+        const e     = ['mail', '@', '5pyd3r', '.org'];
         const email = e.join('');
         emailLink.href             = 'mailto:' + email;
         emailDisplay.textContent   = email;
