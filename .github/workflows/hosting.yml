@@ -37,14 +37,15 @@ jobs:
           # Cloudflare pair
           cf_direct=$(check_url "https://3rr0r-505-github-io.pages.dev")
           cf_domain=$(check_url "https://5pyd3r.is-a.dev")
-
-          if [ "$cf_direct" -eq 200 ] && [ "$cf_domain" -eq 200 ]; then
-            report+="- ✅ Cloudflare — UP (pages.dev: $cf_direct, is-a.dev: $cf_domain)\n"
-          elif [ "$cf_direct" -eq 200 ] && [ "$cf_domain" -ne 200 ]; then
-            report+="- ⚠️ Cloudflare — HOST UP, DNS ISSUE (pages.dev: $cf_direct, is-a.dev: $cf_domain)\n"
+          cf_me=$(check_url "https://me.5pyd3r.org")
+          
+          if [ "$cf_direct" -eq 200 ] && [ "$cf_domain" -eq 200 ] && [ "$cf_me" -eq 200 ]; then
+            report+="- ✅ Cloudflare — UP (pages.dev: $cf_direct, is-a.dev: $cf_domain, me.5pyd3r.org: $cf_me)\n"
+          elif [ "$cf_direct" -eq 200 ] && [ "$cf_me" -ne 200 ]; then
+            report+="- ⚠️ Cloudflare — HOST UP, DNS ISSUE (pages.dev: $cf_direct, is-a.dev: $cf_domain, me.5pyd3r.org: $cf_me)\n"
             all_up=false
           else
-            report+="- ❌ Cloudflare — DOWN (pages.dev: $cf_direct, is-a.dev: $cf_domain)\n"
+            report+="- ❌ Cloudflare — DOWN (pages.dev: $cf_direct, is-a.dev: $cf_domain, me.5pyd3r.org: $cf_me)\n"
             all_up=false
           fi
 
