@@ -165,9 +165,37 @@ Save this as `codium-update.ps1` somewhere convenient (I keep mine inside `<YOUR
 # ============================================================
 
 param (
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $false)]
     [string]$location
 )
+
+# ---------------------------------------------------------------
+# HELP menu
+# ---------------------------------------------------------------
+
+if ($args -contains '--help' -or $args -contains '-help' -or $location -eq '--help') {
+    Write-Host ""
+    Write-Host "USAGE:" -ForegroundColor Cyan
+    Write-Host "  .\codium-update.ps1 -location <path-to-zip>"
+    Write-Host ""
+    Write-Host "EXAMPLE:" -ForegroundColor Cyan
+    Write-Host "  .\codium-update.ps1 -location `"C:\Downloads\VSCodium-win32-x64-1.99.0.zip`""
+    Write-Host ""
+    Write-Host "OPTIONS:" -ForegroundColor Cyan
+    Write-Host "  -location   Path to the VSCodium .zip file  (required)"
+    Write-Host "  --help      Show this help message"
+    Write-Host ""
+    Write-Host "NOTES:" -ForegroundColor Cyan
+    Write-Host "  - VSCodium must not be running before update"
+    Write-Host "  - data\ and manual\ folders are preserved"
+    Write-Host ""
+    exit 0
+}
+
+if (-not $location) {
+    Write-Host "ERROR: -location is required. Run with --help for usage." -ForegroundColor Red
+    exit 1
+}
 
 # ---------------------------------------------------------------
 # CONFIGURE THIS — set your VSCodium install path
