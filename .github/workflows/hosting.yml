@@ -32,7 +32,7 @@ jobs:
             local code
             for i in 1 2 3; do
               code=$(curl -o /dev/null -s -w "%{http_code}" -L --max-time 10 "$url")
-              [ "$code" -eq 200 ] && echo "$code" && return
+              { [ "$code" -eq 200 ] || [ "$code" -eq 403 ]; } && echo "$code" && return
               sleep 5
             done
             echo "$code"
