@@ -32,7 +32,7 @@ jobs:
             local code
             for i in 1 2 3; do
               code=$(curl -o /dev/null -s -w "%{http_code}" -L --max-time 10 "$url")
-              { [ "$code" -eq 200 ] || [ "$code" -eq 403 ]; } && echo "$code" && return
+              [ "$code" -eq 200 ] && echo "$code" && return
               sleep 5
             done
             echo "$code"
@@ -45,6 +45,7 @@ jobs:
           cf_direct=$(check_url "https://3rr0r-505-github-io.pages.dev")
           cf_domain=$(check_url "https://5pyd3r.is-a.dev")
           cf_me=$(check_url "https://me.5pyd3r.org")
+          [ "$cf_me" -eq 403 ] && cf_me=200
 
           if [ "$cf_direct" -eq 200 ] && [ "$cf_domain" -eq 200 ] && [ "$cf_me" -eq 200 ]; then
             report+="- ✅ Cloudflare — UP (pages.dev: $cf_direct, is-a.dev: $cf_domain, me.5pyd3r.org: $cf_me)\n"
