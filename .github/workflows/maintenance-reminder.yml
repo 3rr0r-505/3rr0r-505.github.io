@@ -2,7 +2,7 @@ name: "🗓️ Monthly Maintenance Reminder"
 
 on:
   schedule:
-    - cron: '30 14 1-7 * 5'  # First Friday of every month at 20:00 IST (14:30 UTC)
+    - cron: '30 14 1 * *'  # First day of every month at 14:30 UTC
   workflow_dispatch:          # Manual trigger from Actions tab anytime
 
 permissions:
