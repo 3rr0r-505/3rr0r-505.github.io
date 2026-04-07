@@ -1,0 +1,183 @@
+%--------------------------------------------------------------------------------
+% Resume — Samrat Dey
+% Focus: Cybersecurity | Red Teaming | Security Auditing
+% Last Updated: 2026-04-07
+%--------------------------------------------------------------------------------
+
+\documentclass[10pt,a4paper]{article}
+
+%----- Packages -----
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{ragged2e}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fontawesome5}
+
+%----- Page Setup -----
+\geometry{left=1.3cm, top=1.2cm, right=1.3cm, bottom=1.2cm}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\tabcolsep}{0in}
+\raggedright
+\pagenumbering{gobble}
+
+%----- Accent Color -----
+\definecolor{accent}{HTML}{2E86AB}
+\definecolor{rulegray}{HTML}{CCCCCC}
+
+%----- Section Formatting -----
+\titleformat{\section}{
+  \vspace{-4pt}\large\bfseries\color{accent}\raggedright
+}{}{0em}{}[{\color{accent}\titlerule[1.2pt]}\vspace{-3pt}]
+
+\titlespacing*{\section}{0pt}{9pt}{5pt}
+
+%----- Bullet style -----
+\renewcommand{\labelitemi}{\textcolor{accent}{\small$\bullet$}}
+
+%----- Custom Column Types -----
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+
+%----- Personal Info -----
+\newcommand{\name}{Samrat Dey}
+\newcommand{\phone}{9382919726}
+\newcommand{\emaila}{samratdey.career@gmail.com}
+\newcommand{\github}{3rr0r-505}
+\newcommand{\linkedin}{samratd3y}
+\newcommand{\portfolio}{me.5pyd3r.org}
+
+%=========================================
+\begin{document}
+%=========================================
+
+%---------- HEADER ----------
+{
+  \centering
+  {\LARGE\bfseries \name} \\[5pt]
+  \small
+  \textcolor{accent}{\faPhone}\ +91-\phone \hspace{4pt}
+  \textcolor{accent}{\faEnvelope}\ \href{mailto:\emaila}{\emaila} \hspace{4pt}
+  \textcolor{accent}{\faGithub}\ \href{https://github.com/\github}{\github} \hspace{4pt}
+  \textcolor{accent}{\faLinkedin}\ \href{https://www.linkedin.com/in/\linkedin/}{in/\linkedin} \hspace{4pt}
+  \textcolor{accent}{\faGlobe}\ \href{https://\portfolio}{\portfolio} \\[4pt]
+  % ================= M.Tech line (uncomment when admitted): =================
+  %\textit{\small M.Tech {\large\textbf{---}} Information Security \hspace{4pt}$\bullet$\hspace{4pt} B.Tech {\large\textbf{---}} Computer Science \hspace{4pt}$\bullet$\hspace{4pt} Penetration Testing \& Red Team Enthusiast}\\[2pt]
+  % ================= B.Tech line (active): =================
+  \textit{\small B.Tech {\large\textbf{---}} Computer Science \hspace{4pt}$\bullet$\hspace{4pt} Penetration Testing \& Red Team Enthusiast} \\[2pt]
+  \par
+}
+
+\vspace{1mm}
+\noindent\textcolor{rulegray}{\rule{\linewidth}{0.4pt}}
+\vspace{-2mm}
+
+%---------- SUMMARY ----------
+\section{Professional Summary}
+\small
+B.Tech Computer Science graduate with hands-on experience in cybersecurity, penetration testing, and vulnerability analysis across lab, academic, and cloud environments. Proficient in Linux security, network protocols (TCP/IP, DNS, HTTP), Python-based security scripting, and SIEM-based threat monitoring using Wazuh. Targeting roles in red teaming, security auditing, or enterprise security assessment.
+
+%---------- TECHNICAL SKILLS ----------
+\section{Technical Skills}
+\small
+\textbf{Offensive Security Tools:} Metasploit, Nmap, Burp Suite, Nikto, WPScan, Searchsploit, Trivy, Bandit, Safety-CLI, msfvenom, Sherlock \\[3pt]
+\textbf{Security \& Monitoring:} Wazuh SIEM, Wireshark, log analysis, threat detection, MITRE ATT\&CK \\[3pt]
+\textbf{Programming \& Scripting:} Python (security scripting, automation), Go, C/C++, Bash \\[3pt]
+\textbf{Cloud \& Platforms:} AWS EC2, Docker, Git/GitHub, VMware, VirtualBox, VS Code \\[3pt]
+\textbf{Databases:} MongoDB (Atlas, Compass), MySQL \hspace{10pt} \textbf{OS:} Kali Linux, Ubuntu, Windows
+
+%---------- EXPERIENCE ----------
+\section{Experience}
+\noindent
+\begin{tabularx}{\textwidth}{L R}
+  \textbf{Cyber Security \& Ethical Hacking Intern} & \textit{Jul. 2024 -- Aug. 2024} \\
+  \textit{NIELIT Haridwar, India} & \href{https://5pyd3r.is-a.dev/assets/certs/intern-2024.pdf}{\textcolor{accent}{Certificate}} \\
+\end{tabularx}
+\vspace{3pt}
+\begin{itemize}[leftmargin=3.5ex, itemsep=2.5pt, topsep=0pt]
+  \small
+  \item Performed vulnerability assessment and exploitation using Metasploit, Nmap, Searchsploit, and Sherlock against lab environments (Metasploitable, EternalBlue/DoublePulsar).
+  \item Conducted adversary simulation on Android targets (msfvenom, AndroRAT, StromBreaker); deployed and monitored Wazuh SIEM for threat detection and log correlation.
+  \item Analyzed landmark malware campaigns (WannaCry, NotPetya, Stuxnet) to extract TTPs and map to MITRE ATT\&CK; completed structured CTF challenges on TryHackMe.
+\end{itemize}
+
+%---------- PROJECTS ----------
+\section{Projects}
+
+% HoneyPott3r
+\noindent
+\begin{tabularx}{\textwidth}{L R}
+  \textbf{HoneyPott3r --- Honeypot Vulnerability Assessment Framework} & \href{https://github.com/3rr0r-505/HoneyPott3r}{\textcolor{accent}{\faGithub\ GitHub}} \\
+\end{tabularx}
+\vspace{1pt}
+\textit{\small Systematic security analysis framework targeting honeypot infrastructure (Docker, AWS EC2).}
+\begin{itemize}[leftmargin=3.5ex, itemsep=2.5pt, topsep=3pt]
+  \small
+  \item Executed simulated attack scenarios (detection evasion, privilege escalation, reverse exploitation, DoS) against Cowrie, Conpot, and Wordpot honeypots; conducted multi-vector scanning using Trivy, Bandit, Nmap, Nikto, and WPScan.
+  \item Identified critical configuration weaknesses; stored telemetry in MongoDB with interactive dashboard for reporting. Findings published as peer-reviewed paper in IJPREMS (Mar. 2025).
+\end{itemize}
+
+\vspace{5pt}
+% KeySpy
+\noindent
+\begin{tabularx}{\textwidth}{L R}
+  \textbf{KeySpy --- Endpoint Monitoring \& Keystroke Security Research Tool} & \href{https://github.com/3rr0r-505/KeySpy}{\textcolor{accent}{\faGithub\ GitHub}} \\
+\end{tabularx}
+\vspace{1pt}
+\textit{\small Python-based endpoint risk analysis tool for keylogger and remote payload execution (RPE) research.}
+\begin{itemize}[leftmargin=3.5ex, itemsep=2.5pt, topsep=3pt]
+  \small
+  \item Simulated USB-based payload delivery and RPE scenarios to evaluate EDR gaps; implemented AES encryption for secure data storage and built a real-time web interface for event visualization.
+\end{itemize}
+
+\vspace{5pt}
+% HawkPro
+\noindent
+\begin{tabularx}{\textwidth}{L R}
+  \textbf{HawkPro --- Linux System \& Process Monitor} & \href{https://github.com/3rr0r-505/HawkPro}{\textcolor{accent}{\faGithub\ GitHub}} \\
+\end{tabularx}
+\vspace{1pt}
+\textit{\small Terminal-based real-time system monitoring tool built in C++ with ncurses, inspired by htop.}
+\begin{itemize}[leftmargin=3.5ex, itemsep=2.5pt, topsep=3pt]
+  \small
+  \item Parsed Linux \texttt{/proc} filesystem to display live CPU, memory, and per-process statistics in an interactive terminal UI; modular CMake architecture with optimized polling for minimal overhead.
+\end{itemize}
+
+%---------- EDUCATION ----------
+\section{Education}
+\noindent
+\begin{tabularx}{\textwidth}{L R}
+  \textbf{Adamas University, Kolkata} & \textit{2021 -- 2025} \\
+  \textit{B.Tech in Computer Science and Engineering} & \textit{CGPA: 8.77} \\
+\end{tabularx}
+
+%---------- PUBLICATIONS ----------
+\section{Publications}
+\small
+\textbf{HONEYPOTT3R}: An Open-Source Multi-Layered Security Analysis Framework for Honeypot Vulnerability Assessment \\[2pt]
+\textit{IJPREMS}, vol. 5, issue 3, pp. 1723--1730, Mar. 2025 \hfill DOI: \href{https://doi.org/10.58257/IJPREMS39220}{\textcolor{accent}{10.58257/IJPREMS39220}}
+
+%---------- CERTIFICATIONS ----------
+\section{Certifications}
+\small
+\textbf{TryHackMe:}
+\href{https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-9YN8F6SLAJ.pdf}{\textcolor{accent}{CompTIA Pentest+}},
+\href{https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-EVC7DTCYWJ.pdf}{\textcolor{accent}{Jr. Penetration Tester}},
+\href{https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-KCYOBBMWKV.pdf}{\textcolor{accent}{Advent of Cyber 2024}},
+\href{https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-VDDWDT8NWY.pdf}{\textcolor{accent}{Intro to Cyber Security}},
+\href{https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-NLQ4QFBFJZ.pdf}{\textcolor{accent}{Web Fundamentals}} \\[3pt]
+\textbf{AWS Educate:}
+\href{https://www.credly.com/badges/d6837af8-9e13-47fc-b375-928fe63768f2/public_url}{\textcolor{accent}{Introduction to Cloud 101}},
+\href{https://www.credly.com/badges/5c61ac7a-62f5-4728-954e-5d3fc481cc9b/public_url}{\textcolor{accent}{Cloud Semester 1}}
+
+%=========================================
+\end{document}

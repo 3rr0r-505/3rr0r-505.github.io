@@ -1,0 +1,268 @@
+%-------------------------
+%~~~~~~~~~~~~~~~~~~~~~~~~~
+% CV — Samrat Dey
+% Focus: Cybersecurity | Red Teaming | Security Auditing
+% Last Updated: 2026-04-07
+%~~~~~~~~~~~~~~~~~~~~~~~~~
+%-------------------------
+
+\documentclass[11pt,a4paper]{article}
+
+%----- Packages -----
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{ragged2e}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fontawesome5}
+\usepackage[most]{tcolorbox}
+
+%----- Page Setup -----
+\geometry{left=1.4cm, top=1.2cm, right=1.4cm, bottom=1.2cm}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\tabcolsep}{0in}
+\raggedright
+
+%----- Accent Color -----
+\definecolor{accent}{HTML}{2E86AB}
+\definecolor{accentdark}{HTML}{1a5c7a}
+\definecolor{lightgray}{HTML}{F4F4F4}
+\definecolor{rulegray}{HTML}{CCCCCC}
+
+%----- Section Formatting -----
+\titleformat{\section}{
+  \vspace{-6pt}\large\bfseries\color{accent}\raggedright
+}{}{0em}{}[{\color{accent}\titlerule[1.2pt]}\vspace{-5pt}]
+
+%----- tcolorbox style -----
+\tcbset{
+  frame code={},
+  left=2pt, right=2pt, top=2pt, bottom=2pt,
+  colback=lightgray, colframe=white,
+  width=\dimexpr\textwidth\relax,
+  boxsep=3pt, arc=2pt, outer arc=2pt,
+}
+
+%----- Custom Column Types -----
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+%----- Custom Commands -----
+\newcommand{\resumeSubheading}[4]{
+  \vspace{3pt}\item
+  \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{\normalsize #1} & \small\textit{#4} \\
+    \small\textit{#3} & \small #2 \\
+  \end{tabular*}
+  \vspace{-2pt}
+}
+
+\newcommand{\resumeProject}[3]{
+  \vspace{3pt}\item
+  \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{\normalsize #1} & \small #3 \\
+    \small\textit{#2} & \\
+  \end{tabular*}
+  \vspace{-2pt}
+}
+
+\newcommand{\resumePOR}[3]{
+  \vspace{-6pt}\item
+  \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} \hspace{1mm} \small{#2} & \small\textit{#3}
+  \end{tabular*}
+  \vspace{-3pt}
+}
+
+\newcommand{\resumeSkillItem}[2]{
+  \item{\textbf{\small #1:}\hspace{1mm}\small #2}
+}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=0mm,itemsep=0pt]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{1mm}}
+\newcommand{\resumeItemListStart}{%
+  \begin{justify}
+  \begin{itemize}[leftmargin=3.5ex, rightmargin=1ex, itemsep=0.5pt, labelsep=1.5mm]
+  \small
+}
+\newcommand{\resumeItemListEnd}{\end{itemize}\end{justify}\vspace{-2mm}}
+\newcommand{\resumeSkillListStart}{\begin{itemize}[leftmargin=*,itemsep=2pt,rightmargin=2ex]}
+\newcommand{\resumeSkillListEnd}{\end{itemize}\vspace{-2mm}}
+
+\renewcommand{\labelitemi}{\textcolor{accent}{\small$\bullet$}}
+\renewcommand{\labelitemii}{\textcolor{accent}{\small$\circ$}}
+
+%----- Personal Info -----
+\newcommand{\name}{Samrat Dey}
+\newcommand{\phone}{9382919726}
+\newcommand{\emaila}{samratdey.career@gmail.com}
+\newcommand{\github}{3rr0r-505}
+\newcommand{\linkedin}{samratd3y}
+\newcommand{\portfolio}{me.5pyd3r.org}
+
+%=========================================
+\begin{document}
+%=========================================
+
+%---------- HEADER ----------
+{
+  \centering
+  {\LARGE\bfseries \name} \\[4pt]
+  \small
+  \textcolor{accent}{\faPhone}\ +91-\phone \hspace{4pt}
+  \textcolor{accent}{\faEnvelope}\ \href{mailto:\emaila}{\emaila} \hspace{4pt}
+  \textcolor{accent}{\faGithub}\ \href{https://github.com/\github}{\github} \hspace{4pt}
+  \textcolor{accent}{\faLinkedin}\ \href{https://www.linkedin.com/in/\linkedin/}{in/\linkedin} \hspace{4pt}
+  \textcolor{accent}{\faGlobe}\ \href{https://\portfolio}{\portfolio} \\[4pt]
+  % ================= M.Tech line (uncomment when admitted): =================
+  %\textit{\small M.Tech {\large\textbf{---}} Information Security \hspace{4pt}$\bullet$\hspace{4pt} B.Tech {\large\textbf{---}} Computer Science \hspace{4pt}$\bullet$\hspace{4pt} Penetration Testing \& Red Team Enthusiast}\\[2pt]
+  % ================= B.Tech line (active): =================
+  \textit{\small B.Tech {\large\textbf{---}} Computer Science \hspace{4pt}$\bullet$\hspace{4pt} Penetration Testing \& Red Team Enthusiast}\\[2pt]
+  \par
+}
+
+\vspace{1mm}
+\noindent\textcolor{rulegray}{\rule{\linewidth}{0.4pt}}
+\vspace{-3mm}
+
+%---------- SUMMARY ----------
+\section{Summary}
+\justify\small
+B.Tech Computer Science graduate with hands-on experience in cybersecurity, penetration testing, and vulnerability analysis across lab, academic, and cloud environments. Proficient in Linux security, network protocol analysis, Python-based security scripting, and SIEM-based threat monitoring using Wazuh. Experienced in building offensive security tools, analyzing real-world attack techniques, and evaluating system and application security controls, targeting roles in red teaming, security auditing, and enterprise security assessment.
+
+\vspace{-1mm}
+
+%---------- EDUCATION ----------
+\section{Education}
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\small
+\begin{tabularx}{\textwidth}{|c|C|c|c|}
+  \hline
+  \textbf{Degree / Certificate} & \textbf{Institute / Board} & \textbf{Score} & \textbf{Year} \\
+  \hline
+  B.Tech. CSE & Adamas University, Kolkata & 8.77 CGPA & 2021--2025 \\
+  \hline
+  Senior Secondary (XII) & WBCHSE Board & 91.2\% & 2021 \\
+  \hline
+  Secondary (X) & WBBSE Board & 94.2\% & 2019 \\
+  \hline
+\end{tabularx}
+
+%---------- EXPERIENCE ----------
+\section{Experience}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {Cyber Security \& Ethical Hacking Intern}{\href{https://5pyd3r.is-a.dev/assets/certs/intern-2024.pdf}{\textcolor{accent}{Certificate}}}
+    {NIELIT Haridwar, India}{Jul. 2024 -- Aug. 2024}
+    \resumeItemListStart
+      \item Performed hands-on vulnerability assessment and exploitation using Metasploit, Nmap, Searchsploit, and Sherlock against lab environments (Metasploitable, EternalBlue/DoublePulsar).
+      \item Conducted adversary simulation on Android targets using msfvenom, AndroRAT, and StromBreaker; documented attack chains and mitigation strategies.
+      \item Deployed and monitored Wazuh SIEM for threat detection, log correlation, and security event analysis in a simulated enterprise setup.
+      \item Analyzed landmark malware campaigns (WannaCry, NotPetya, Stuxnet) to extract TTPs and map to MITRE ATT\&CK framework concepts.
+      \item Completed structured offensive and defensive CTF challenges on TryHackMe, reinforcing practical exploitation and incident response skills.
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+\vspace{-5mm}
+
+%---------- PROJECTS ----------
+\section{Projects}
+\resumeSubHeadingListStart
+
+  % HoneyPott3r
+  \resumeSubheading
+    {HoneyPott3r --- Honeypot Vulnerability Assessment Framework}{\href{https://github.com/3rr0r-505/HoneyPott3r}{\textcolor{accent}{\faGithub\ GitHub}}}
+    {Systematic security analysis framework targeting honeypot infrastructure.}{}
+    \resumeItemListStart
+      \item Designed and executed simulated attack scenarios --- detection evasion, log manipulation, privilege escalation, reverse exploitation, and DoS --- against Cowrie, Conpot, and Wordpot honeypots deployed in Docker on AWS EC2 (Debian).
+      \item Conducted multi-vector vulnerability scanning using Trivy, Bandit, Safety-CLI, Nmap, Nikto, and WPScan; integrated Metasploit module lookups to map exploitable attack paths.
+      \item Identified critical configuration weaknesses in SSH and HTTP honeypot deployments, proposing deception hardening and improved threat monitoring strategies.
+      \item Stored attack telemetry in MongoDB and built an interactive web dashboard for real-time visualization and structured reporting.
+      \item Published findings as a peer-reviewed research paper in IJPREMS (Mar. 2025).
+    \resumeItemListEnd
+
+  % KeySpy
+  \resumeSubheading
+    {KeySpy --- Endpoint Monitoring \& Keystroke Security Research Tool}{\href{https://github.com/3rr0r-505/KeySpy}{\textcolor{accent}{\faGithub\ GitHub}}}
+    {Python-based endpoint risk analysis tool for keylogger and remote payload execution research.}{}
+    \resumeItemListStart
+      \item Simulated USB-based payload delivery and remote payload execution (RPE) scenarios in a controlled lab to evaluate endpoint detection and response (EDR) gaps.
+      \item Captured keystrokes, active window context, and timestamps via \texttt{pynput}; implemented AES encryption for secure data storage and transmission, following security research best practices.
+      \item Persisted collected telemetry in MongoDB Atlas and built a real-time web interface for event visualization and security control assessment.
+    \resumeItemListEnd
+
+  % HawkPro
+  \resumeSubheading
+    {HawkPro --- Linux System \& Process Monitor}{\href{https://github.com/3rr0r-505/HawkPro}{\textcolor{accent}{\faGithub\ GitHub}}}
+    {Terminal-based real-time system monitoring tool built in C++ with ncurses, inspired by htop.}{}
+    \resumeItemListStart
+      \item Parsed the Linux \texttt{/proc} filesystem to display live CPU, memory, and per-process statistics in an interactive terminal UI.
+      \item Implemented a modular C++ architecture with CMake; optimized polling intervals for minimal performance overhead, demonstrating low-level Linux system programming proficiency.
+    \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+\vspace{-5mm}
+
+%---------- TECHNICAL SKILLS ----------
+\section{Technical Skills}
+\resumeSkillListStart
+  \resumeSkillItem{Offensive Security Tools}
+    {Metasploit, Nmap, Burp Suite, Nikto, WPScan, Searchsploit, Trivy, Bandit, Safety-CLI, msfvenom, Sherlock}
+  \resumeSkillItem{Security \& Monitoring}
+    {Wazuh SIEM, Wireshark, AndroRAT, StromBreaker, log analysis, threat detection, MITRE ATT\&CK}
+  \resumeSkillItem{Programming \& Scripting}
+    {Python (security scripting, automation), Go (network programming, TLS analysis), C/C++ (memory concepts, OOP, STL), Bash (scripting)}
+  \resumeSkillItem{Web Technologies}
+    {HTML, CSS, JavaScript (basic), web dashboard development}
+  \resumeSkillItem{Cloud \& Platforms}
+    {AWS EC2 (Debian), Docker, Git/GitHub, VMware, VirtualBox, VS Code}
+  \resumeSkillItem{Databases}
+    {MongoDB (Atlas, Compass), MySQL}
+  \resumeSkillItem{Operating Systems}
+    {Kali Linux, Ubuntu, Windows}
+\resumeSkillListEnd
+
+%---------- PUBLICATIONS ----------
+\section{Publications}
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+  \small\item A.~B.~Thakur, \textbf{S.~Dey}, S.~Rahman, and A.~Chaurasia,
+  ``\textbf{HONEYPOTT3R: An Open-Source Multi-Layered Security Analysis Framework for Honeypot Vulnerability Assessment},''
+  \textit{International Journal of Progressive Research in Engineering Management and Science (IJPREMS)},
+  vol.~5, issue.~3, pp.~1723--1730, Mar.~2025.
+  DOI: \href{https://www.doi.org/10.58257/IJPREMS39220}{\textcolor{accent}{10.58257/IJPREMS39220}}.
+\end{itemize}
+\vspace{-3mm}
+
+%---------- CERTIFICATIONS ----------
+\section{Certifications}
+\resumeSubHeadingListStart
+  \resumePOR{Jr. Penetration Tester}{--- TryHackMe}
+    {\href{https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-EVC7DTCYWJ.pdf}{\textcolor{accent}{View}}}
+  \resumePOR{CompTIA Pentest+}{--- TryHackMe}
+    {\href{https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-9YN8F6SLAJ.pdf}{\textcolor{accent}{View}}}
+  \resumePOR{Advent of Cyber 2024}{--- TryHackMe}
+    {\href{https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-KCYOBBMWKV.pdf}{\textcolor{accent}{View}}}
+  \resumePOR{Introduction to Cyber Security}{--- TryHackMe}
+    {\href{https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-VDDWDT8NWY.pdf}{\textcolor{accent}{View}}}
+  \resumePOR{Web Fundamentals}{--- TryHackMe}
+    {\href{https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-NLQ4QFBFJZ.pdf}{\textcolor{accent}{View}}}
+  \resumePOR{Introduction to Cloud Semester 1}{--- AWS Educate}
+    {\href{https://www.credly.com/badges/5c61ac7a-62f5-4728-954e-5d3fc481cc9b/public_url}{\textcolor{accent}{View}}}
+  \resumePOR{Introduction to Cloud 101}{--- AWS Educate}
+    {\href{https://www.credly.com/badges/d6837af8-9e13-47fc-b375-928fe63768f2/public_url}{\textcolor{accent}{View}}}
+\resumeSubHeadingListEnd
+
+%=========================================
+\end{document}
