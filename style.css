@@ -907,5 +907,8 @@
         .about-grid,
         .contact-inner  { grid-template-columns: 1fr; gap: 36px; } /* Stack columns */
         .radar          { display: none; }             /* Radar hidden on small screens */
+        .skills-grid    { grid-template-columns: 1fr; }
+        .projects-grid  { grid-template-columns: 1fr; }
+        .certs-grid     { grid-template-columns: 1fr; }
         footer          { padding: 20px; flex-direction: column; text-align: center; }
     }
