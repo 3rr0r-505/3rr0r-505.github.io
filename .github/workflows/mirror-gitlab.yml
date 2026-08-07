@@ -1,0 +1,67 @@
+name: Mirror to GitLab
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  mirror:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to GitLab
+        run: |
+          git remote add gitlab https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.com/3rr0r-505/portfolio.git
+          git push gitlab main --force
+
+  check-token-expiry:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Check GitLab token expiry
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+        run: |
+          RESPONSE=$(curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "https://gitlab.com/api/v4/personal_access_tokens/self")
+          EXPIRES_AT=$(echo "$RESPONSE" | grep -o '"expires_at":"[^"]*"' | cut -d'"' -f4)
+
+          if [ -z "$EXPIRES_AT" ]; then
+            echo "Could not fetch token expiry — skipping check."
+            exit 0
+          fi
+
+          EXPIRY_EPOCH=$(date -d "$EXPIRES_AT" +%s)
+          NOW_EPOCH=$(date +%s)
+          DAYS_LEFT=$(( (EXPIRY_EPOCH - NOW_EPOCH) / 86400 ))
+
+          echo "GitLab token expires in $DAYS_LEFT days ($EXPIRES_AT)"
+
+          if [ "$DAYS_LEFT" -le 30 ]; then
+            EXISTING=$(gh issue list --search "GitLab mirror token expiring" --state open --json number --jq '.[0].number')
+            if [ -z "$EXISTING" ]; then
+              printf '%s\n' \
+                "The GITLAB_TOKEN secret used by mirror-gitlab.yml is expiring soon." \
+                "" \
+                "Rotate it:" \
+                "1. GitLab -> portfolio repo -> Settings -> Access Tokens -> create new (Maintainer, write_repository, 365d)" \
+                "2. GitHub -> repo Settings -> Secrets and variables -> Actions -> update GITLAB_TOKEN" \
+                > /tmp/issue_body.md
+              gh issue create \
+                --title "GitLab mirror token expiring in $DAYS_LEFT days" \
+                --body-file /tmp/issue_body.md
+            else
+              echo "Issue already open (#$EXISTING), skipping."
+            fi
+          fi
